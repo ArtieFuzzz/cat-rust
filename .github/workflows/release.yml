@@ -36,5 +36,5 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            target/release/catr.exe
+          name: catr
+          files: target/release/catr.exe

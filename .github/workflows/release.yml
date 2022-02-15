@@ -34,7 +34,6 @@ jobs:
           files: target/release/catr
           args: --brute
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: elgohr/Github-Release-Action@master
         with:
-          name: catr
-          files: target/release/catr.exe
+          args: Release

@@ -34,7 +34,7 @@ jobs:
           files: ${{github.workspace}}/target/release/catr.exe
           args: --brute
       - name: Debug Path
-        run: ls ${{github.workspace}}
+        run: ls ${{github.workspace}}/target
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')

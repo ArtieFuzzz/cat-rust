@@ -8,14 +8,14 @@ fn main() {
     let arg = raw_arg.unwrap_or(empty);
 
     if arg.is_empty() {
-        println!("{}", "No path provided.");
+        println!("No path provided.");
         exit(0);
     }
 
     let f = File::open(&arg);
 
     if f.is_err() {
-        println!("{}", "The system cannot find the specified file.");
+        println!("The system cannot find the specified file.");
         exit(0);
     }
 

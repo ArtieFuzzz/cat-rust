@@ -2,7 +2,7 @@ name: Release Executable
 
 on:
   release:
-    types: [created]
+    types: [created, released]
 
   workflow_dispatch:
 

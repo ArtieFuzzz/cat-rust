@@ -7,34 +7,31 @@ on:
   workflow_dispatch:
 
 jobs:
+  release:
+    name: release ${{ matrix.target }} (with non-required env)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-pc-windows-gnu
+            archive: zip
+          - target: x86_64-unknown-linux-musl
+            archive: tar.gz
+          - target: x86_64-apple-darwin
+            archive: zip
+          - target: wasm32-wasi
+            archive: zip tar.gz
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-      - name: Set up cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      - name: Build Release Executable
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release
-      - name: Run UPX
-        uses: crazy-max/ghaction-upx@v1
-        with:
-          version: latest
-          files: ${{github.workspace}}/target/release/catr.exe
-          args: --brute
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: ${{github.workspace}}/target/release/catr.exe
+      - name: Compile and Release
+        uses: rust-build/rust-build.action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUSTTARGET: ${{ matrix.target }}
+          EXTRA_FILES: "README.md"
+          SRC_DIR: "hello"
+          ARCHIVE_TYPES: ${{ matrix.archive }}
+          MINIFY: "yes"

@@ -29,6 +29,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUSTTARGET: ${{ matrix.target }}
-          SRC_DIR: "src"
           ARCHIVE_TYPES: ${{ matrix.archive }}
           MINIFY: "yes"

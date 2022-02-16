@@ -15,11 +15,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let f = File::open(&arg);
 
     if f.is_err() {
-        println!("The system cannot find the specified file.");
+        println!("Cannot find the specified file.");
         exit(0);
     }
 
-    let reader = BufReader::new(f.unwrap());
+    let reader = BufReader::new(f?);
 
     for line in reader.lines() {
         println!("{}", &line?);

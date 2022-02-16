@@ -2,7 +2,7 @@ use std::env;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::process::exit;
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let raw_arg = env::args().nth(1);
     let empty = String::from("");
     let arg = raw_arg.unwrap_or(empty);
@@ -22,8 +22,8 @@ fn main() {
     let reader = BufReader::new(f.unwrap());
 
     for line in reader.lines() {
-        println!("{}", &line.unwrap());
+        println!("{}", &line?);
     }
 
-    exit(0);
+    Ok(())
 }
